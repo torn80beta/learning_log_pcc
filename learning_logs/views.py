@@ -7,6 +7,11 @@ from .forms import TopicForm, EntryForm
 # Create your views here.
 
 
+def check_topic_owner(topic, request):
+    if topic.owner != request.user:
+        raise Http404
+
+
 def index(request):
     """ Домашняя страница приложения Learning Log"""
     return render(request, 'learning_logs/index.html')
@@ -25,8 +30,7 @@ def topic(request, topic_id):
     """Вывод всех записей одной темы"""
     topic = Topic.objects.get(id=topic_id)
     # Проверка принадлежности темы пользователю
-    if topic.owner != request.user:
-        raise Http404
+    check_topic_owner(topic, request)
     entries = topic.entry_set.order_by('-date_added')
     context = {'topic': topic, 'entries': entries}
     return render(request, 'learning_logs/topic.html', context)
@@ -56,6 +60,7 @@ def new_topic(request):
 def new_entry(request, topic_id):
     """Добавление новой записи в определенной теме"""
     topic = Topic.objects.get(id=topic_id)
+    check_topic_owner(topic, request)
     if request.method != 'POST':
         # Если данные не отправляются, создается пустая форма
         form = EntryForm()
@@ -78,8 +83,7 @@ def edit_entry(request, entry_id):
     """Редактирование существующей записи"""
     entry = Entry.objects.get(id=entry_id)
     topic = entry.topic
-    if topic.owner != request.user:
-        raise Http404
+    check_topic_owner(topic, request)
     if request.method != 'POST':
         # Исходный запрос; форма заполняется данными текузей записи
         form = EntryForm(instance=entry)
