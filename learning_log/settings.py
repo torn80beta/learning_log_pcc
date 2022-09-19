@@ -27,14 +27,16 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# My Settings
+LOGIN_URL = '/users/login/'
 
 # Application definition
 
 INSTALLED_APPS = [
-    #Мои приложения
+    # Мои приложения
     'learning_logs',
     'users',
-    #Приложения по умолчанию
+    # Приложения по умолчанию
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
