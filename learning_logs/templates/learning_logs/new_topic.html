@@ -1,13 +1,20 @@
 {% extends "learning_logs/base.html" %}
+{% load bootstrap4 %}
+
+{% block page_header %}
+    <p>Enter the title for a topic:</p>
+{% endblock page_header %}
+
 
 {% block content %}
 
-<p>Add a new topic:</p>
-
-<form action="{% url 'learning_logs:new_topic' %}" method='post'>
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button name="submit">add topic</button>
-</form>
+    <form class="form" method='post' action="{% url 'learning_logs:new_topic' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% buttons %}
+            <button class="btn btn-outline-primary" name="submit">add topic</button>
+        {% endbuttons %}
+    </form>
 
 {% endblock content %}
+
