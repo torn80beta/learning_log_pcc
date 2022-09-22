@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
+from django.views.generic import DeleteView
 
 # Create your views here.
 
@@ -85,7 +86,7 @@ def edit_entry(request, entry_id):
     topic = entry.topic
     check_topic_owner(topic, request)
     if request.method != 'POST':
-        # Исходный запрос; форма заполняется данными текузей записи
+        # Исходный запрос; форма заполняется данными текущей записи
         form = EntryForm(instance=entry)
     else:
         # Отправка данных POST; обработать данные
@@ -104,4 +105,10 @@ def delete_entry(request, entry_id):
     check_topic_owner(topic, request)
     entry.delete()
     return redirect('learning_logs:topic', topic_id=topic.id)
+
+
+class DeleteEntryView(DeleteView):
+    model = Entry
+    template_name = 'learning_logs/delete_entry.html'
+    # success_url = '/topics/'
 
