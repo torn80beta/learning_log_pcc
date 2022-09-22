@@ -1,4 +1,6 @@
 {% extends 'learning_logs/base.html' %}
+{% load bootstrap4 %}
+
 
 {% block page_header %}
     <h3>{{ topic }}</h3>
@@ -13,7 +15,8 @@
         <div class="card mb-3">
             <h4 class="card-header">
                 {{ entry.date_added|date:'M d, Y H:i' }}
-                <small><a href="{% url 'learning_logs:edit_entry' entry.id %}">edit entry</a> </small>
+                <a href="{% url 'learning_logs:edit_entry' entry.id %}" class="btn btn-outline-primary">edit entry</a>
+                <a href="{% url 'learning_logs:delete_entry' entry.id %}" class="btn btn-outline-primary">delete entry</a>
             </h4>
             <div class="card-body">
                 {{ entry.text|linebreaks }}
