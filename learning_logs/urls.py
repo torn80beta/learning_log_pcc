@@ -2,7 +2,7 @@
 
 from django.urls import path
 from . import views
-from .views import DeleteEntryView
+#from .views import DeleteEntryView
 
 app_name = 'learning_logs'
 urlpatterns = [
@@ -19,5 +19,7 @@ urlpatterns = [
     # Страница для редактирования записи
     path('edit_entry/<int:entry_id>/', views.edit_entry, name='edit_entry'),
     # Удаление записи
-    path('delete_entry/<int:pk>/', DeleteEntryView.as_view(success_url='/topics/'), name='delete_entry'),
+    path('delete_entry/<int:entry_id>/', views.delete_entry, name='delete_entry'),
+    # Удаление записи встроенным методом
+    # path('delete_entry/<int:pk>/', DeleteEntryView.as_view(success_url='/topics/'), name='delete_entry'),
 ]

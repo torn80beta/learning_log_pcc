@@ -103,12 +103,15 @@ def delete_entry(request, entry_id):
     entry = Entry.objects.get(id=entry_id)
     topic = entry.topic
     check_topic_owner(topic, request)
-    entry.delete()
-    return redirect('learning_logs:topic', topic_id=topic.id)
+    if request.method == 'POST':
+        entry.delete()
+        return redirect('learning_logs:topic', topic_id=topic.id)
+    context = {'entry': entry, 'topic': topic}
+    return render(request, 'learning_logs/delete_entry.html', context)
 
-
-class DeleteEntryView(DeleteView):
-    model = Entry
-    template_name = 'learning_logs/delete_entry.html'
-    # success_url = '/topics/'
+# Удаление записи встроенным методом
+# class DeleteEntryView(DeleteView):
+#     model = Entry
+#     template_name = 'learning_logs/delete_entry.html'
+#     success_url = '/topics/'
 
