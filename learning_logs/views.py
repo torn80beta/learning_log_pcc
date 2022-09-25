@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
-from django.views.generic import DeleteView
+#from django.views.generic import DeleteView
 
 # Create your views here.
 
@@ -100,6 +100,7 @@ def edit_entry(request, entry_id):
 
 @login_required
 def delete_entry(request, entry_id):
+    """Удаление записи"""
     entry = Entry.objects.get(id=entry_id)
     topic = entry.topic
     check_topic_owner(topic, request)
@@ -109,9 +110,13 @@ def delete_entry(request, entry_id):
     context = {'entry': entry, 'topic': topic}
     return render(request, 'learning_logs/delete_entry.html', context)
 
+
+@login_required
+def delete_topic(request, topic_id):
+    pass
+
 # Удаление записи встроенным методом
 # class DeleteEntryView(DeleteView):
 #     model = Entry
 #     template_name = 'learning_logs/delete_entry.html'
 #     success_url = '/topics/'
-

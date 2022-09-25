@@ -19,7 +19,11 @@ urlpatterns = [
     # Страница для редактирования записи
     path('edit_entry/<int:entry_id>/', views.edit_entry, name='edit_entry'),
     # Удаление записи
-    path('delete_entry/<int:entry_id>/', views.delete_entry, name='delete_entry'),
+    path('delete_entry/<int:entry_id>/',
+         views.delete_entry, name='delete_entry'),
     # Удаление записи встроенным методом
     # path('delete_entry/<int:pk>/', DeleteEntryView.as_view(success_url='/topics/'), name='delete_entry'),
+    # Удаление топика
+    path('delete_topic/<int:topic_id>/',
+         views.delete_topic, name='delete_topic'),
 ]

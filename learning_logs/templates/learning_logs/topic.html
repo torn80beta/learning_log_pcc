@@ -3,14 +3,24 @@
 
 
 {% block page_header %}
-    <h3>{{ topic }}</h3>
+    <div class="card mb-3 card-header">
+        <table>
+            <tr>
+                <td>
+                    <h3>
+                        {{ topic }}
+                    </h3>
+                </td>
+                <td style="text-align: right;">
+                    <a class="btn btn-outline-primary" role="button" href="{% url 'learning_logs:new_entry' topic.id %}">Add new entry</a>
+                </td>
+            </tr>
+        </table>
+    </div>
 {% endblock page_header %}
 
 {% block content %}
-    <p>
-        <a href="{% url 'learning_logs:new_entry' topic.id %}">Add new entry</a>
-    </p>
-
+    </br>
     {% for entry in entries %}
         <div class="card mb-3">
             <h4 class="card-header">

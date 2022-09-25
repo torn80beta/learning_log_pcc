@@ -1,20 +1,22 @@
-{% extends "learning_logs/base.html" %}
+{% extends "learning_logs/base.html" %} 
 
 {% block page_header %}
-    <h1>Topics</h1>
-{% endblock page_header %}
+<h1>Topics</h1>
+{% endblock page_header %} 
 
 {% block content %}
+    <div class="jumbotron">
     <ul>
         {% for topic in topics %}
-            <li>
-                <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a>
-            </li>
+        <li>
+        <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a>
+        </li>
         {% empty %}
         <li><h5>No topics have been added yet.</h5></li>
         {% endfor %}
     </ul>
+    </div>
 
-    <h5><a href="{% url 'learning_logs:new_topic' %}">Add new topic</a></h5>
+    <a class="btn btn-lg btn-primary" role="button" href="{% url 'learning_logs:new_topic' %}">Add new topic</a>
+
 {% endblock content %}
-
