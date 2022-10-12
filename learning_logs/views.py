@@ -5,10 +5,9 @@ from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
 #from django.views.generic import DeleteView
 
-# Create your views here.
-
 
 def check_topic_owner(topic, request):
+    owner = request.user
     if topic.owner != request.user:
         raise Http404
 
@@ -113,7 +112,13 @@ def delete_entry(request, entry_id):
 
 @login_required
 def delete_topic(request, topic_id):
-    pass
+    topic = Topic.objects.get(id=topic_id)
+    check_topic_owner(topic, request)
+    if request.method == "POST":
+        topic.delete()
+        return redirect('learning_logs:topics')
+    context = {'topic': topic}
+    return render(request, 'learning_logs/delete_topic.html', context)
 
 # Удаление записи встроенным методом
 # class DeleteEntryView(DeleteView):
